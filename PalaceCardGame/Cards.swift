@@ -75,8 +75,8 @@ class CardCollection {
             Card (12, "Spade"),
             Card (13, "Spade"),
             Card (14, "Spade"),
-            Card (1, "RedJoker"),
-            Card (1, "BlackJoker"),
+            Card (1, "Joker"),
+            Card (2, "Joker"),
 
             
         ]
