@@ -2,8 +2,8 @@
 //  GameViewController.swift
 //  PalaceCardGame
 //
-//  Created by iD Student on 7/24/17.
-//  Copyright © 2017 iD Blair. All rights reserved.
+//  Created by Henry Blair on 7/22/17.
+//  Copyright © 2017 Henry Blair. All rights reserved.
 //
 
 import UIKit
@@ -11,7 +11,7 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,11 +31,11 @@ class GameViewController: UIViewController {
             view.showsNodeCount = true
         }
     }
-
+    
     override var shouldAutorotate: Bool {
         return true
     }
-
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown
@@ -43,12 +43,12 @@ class GameViewController: UIViewController {
             return .all
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
-
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }

@@ -83,6 +83,8 @@ class CardCollection {
         
     }
     func pickRandomCard () -> Card{
+        print (" hi")
+        
         let randomCardIndex = Int (arc4random_uniform(UInt32(cards.count)))
         let card = cards [randomCardIndex]
         
