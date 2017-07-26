@@ -28,7 +28,7 @@ class CardCollection {
     private init () {
         cards = [
             
-            Card (2, "Diamond"),
+            Card (1, "Diamond"),
             Card (3, "Diamond"),
             Card (4, "Diamond"),
             Card (5, "Diamond"),
@@ -41,7 +41,7 @@ class CardCollection {
             Card (12, "Diamond"),
             Card (13, "Diamond"),
             Card (14, "Diamond"),
-            Card (2, "Heart"),
+            Card (1, "Heart"),
             Card (3, "Heart"),
             Card (4, "Heart"),
             Card (5, "Heart"),
@@ -54,7 +54,7 @@ class CardCollection {
             Card (12, "Heart"),
             Card (13, "Heart"),
             Card (14, "Heart"),
-            Card (2, "Club"),
+            Card (1, "Club"),
             Card (3, "Club"),
             Card (4, "Club"),
             Card (5, "Club"),
@@ -67,7 +67,7 @@ class CardCollection {
             Card (12, "Club"),
             Card (13, "Club"),
             Card (14, "Club"),
-            Card (2, "Spade"),
+            Card (1, "Spade"),
             Card (3, "Spade"),
             Card (4, "Spade"),
             Card (5, "Spade"),
@@ -80,8 +80,8 @@ class CardCollection {
             Card (12, "Spade"),
             Card (13, "Spade"),
             Card (14, "Spade"),
-            Card (1, "Joker"),
-            Card (2, "Joker"),
+            Card (2, "BJoker"),
+            Card (2, "RJoker"),
 
             
         ]
