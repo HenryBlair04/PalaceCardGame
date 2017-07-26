@@ -9,12 +9,17 @@
 import Foundation
 import SpriteKit
 
-class Card {
+class Card: SKSpriteNode {
     var value: Int
     var suit: String
     init (_ value: Int, _ suit: String) {
         self.value = value //class value = self.value and parameter value = value//
         self.suit = suit
+        super.init(texture: SKTexture(imageNamed: "\(value) \(suit)"), color: UIColor.clear, size: CGSize (width:145, height: 200))
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 class CardCollection {
@@ -83,7 +88,6 @@ class CardCollection {
         
     }
     func pickRandomCard () -> Card{
-        print (" hi")
         
         let randomCardIndex = Int (arc4random_uniform(UInt32(cards.count)))
         let card = cards [randomCardIndex]
