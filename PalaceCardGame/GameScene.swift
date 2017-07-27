@@ -479,28 +479,81 @@ class GameScene: SKScene {
 //                                                                                       |||||||||||||
 //                                                                                       |||||||||||||
                     
-                    
-                else if playedPile.count >= 0 && card.value == 7 { //special 7 power
-                    let i = playerHandPile.index(of: card)
-                    playerHandPile.remove(at: i!)
-                    card.removeFromParent()
-                    playedPile.append(card)
-                    addChild(label7Magic)
-                    label7Magic.run(SKAction.sequence([
-                        SKAction.fadeIn(withDuration: 0.5),
-                        SKAction.wait(forDuration: 2),
-                        SKAction.fadeOut(withDuration: 0.5),
-                        SKAction.removeFromParent()
-                        ]))
-                    print (x)
-                    print ("7 played")
-                    break
-
-
+                else if card.value == 7 { //                                seven is played
+                    if playedPile.count >= 0{
+                        let i = playerHandPile.index(of: card)
+                        playerHandPile.remove(at: i!)
+                        card.removeFromParent()
+                        playedPile.append(card)
+                        addChild(label7Magic)
+                        label7Magic.run(SKAction.sequence([
+                            SKAction.fadeIn(withDuration: 0.5),
+                            SKAction.wait(forDuration: 2),
+                            SKAction.fadeOut(withDuration: 0.5),
+                            SKAction.removeFromParent()
+                            ]))
+                        print (x)
+                        print ("7 played")
+                        break
+                    }
                 }
-                    
+                else if card.value == 7 { //                                seven is played
+                    if playedPile.count == 0{
+                        let i = playerHandPile.index(of: card)
+                        playerHandPile.remove(at: i!)
+                        card.removeFromParent()
+                        playedPile.append(card)
+                        addChild(label7Magic)
+                        label7Magic.run(SKAction.sequence([
+                            SKAction.fadeIn(withDuration: 0.5),
+                            SKAction.wait(forDuration: 2),
+                            SKAction.fadeOut(withDuration: 0.5),
+                            SKAction.removeFromParent()
+                            ]))
+                        print (x)
+                        print ("7 played first card")
+                        break
+                    }
+                }
+                else if (playedPile.count >= 2 && playedPile[playedPile.count-2].value == 7 && playedPile[playedPile.count-1].value == 11) {
+                    if card.value <= 7 {
+                        let i = playerHandPile.index(of: card)
+                        playerHandPile.remove(at: i!)
+                        card.removeFromParent()
+                        playedPile.append(card)
+                        
+                        print (x)
+                        print ("good after jack7 played")
+                        break
+                    }
+                    if card.value > 7 {
+                        let i = playerHandPile.index(of: card)
+                        playerHandPile.remove(at: i!)
+                        card.removeFromParent()
+                        playedPile.append(card)
+                        playerHandPile.append(contentsOf: playedPile)
+                        playedPile.removeAll()
+                        addChild(label7Error)
+                        label7Error.run(SKAction.sequence([
+                            SKAction.fadeIn(withDuration: 0.5),
+                            SKAction.wait(forDuration: 2),
+                            SKAction.fadeOut(withDuration: 0.5),
+                            SKAction.removeFromParent()
+                            ]))
+                        addChild(label2)
+                        label2.run(SKAction.sequence([
+                            SKAction.fadeIn(withDuration: 0.5),
+                            SKAction.wait(forDuration: 2),
+                            SKAction.fadeOut(withDuration: 0.5),
+                            SKAction.removeFromParent()
+                            ]))
+                        print (x)
+                        print ("bad after jack7 played")
+                        break
+                    }
+                }
                 else if playedPile.count > 0 && (playedPile.last?.value == 7)  { //following a seven
-                    if card.value <= (playedPile.last?.value)! {
+                    if card.value <= (playedPile.last?.value)! && card.value != 2{
                         
                         let i = playerHandPile.index(of: card)
                         playerHandPile.remove(at: i!)
@@ -554,7 +607,16 @@ class GameScene: SKScene {
                         print ("10 played after a 7")
                         break
                     }
-                
+                    if playedPile.last?.value == 7 && card.value == 2 { //joker after 7
+                        let i = playerHandPile.index(of: card)
+                        playerHandPile.remove(at: i!)
+                        card.removeFromParent()
+                        playedPile.append(card)
+                        computerHandPile.append(contentsOf: playedPile)
+                        playedPile.removeAll()
+                        print ("joker played")
+                        break
+                    }
                 }
 //                                                              |||||||||||||||          |||||||||||||||
 //                                                              |||||||||||||||          |||||||||||||||
@@ -596,6 +658,7 @@ class GameScene: SKScene {
                     
                     
                     
+                
                 else if playedPile.count >= 0 && card.value == 11 {
                     let i = playerHandPile.index(of: card)
                     playerHandPile.remove(at: i!)
@@ -607,8 +670,27 @@ class GameScene: SKScene {
 
                 }
                 
+                else if playedPile.last?.value == 11 && playedPile.count == 1 {
+                    let i = playerHandPile.index(of: card)
+                    playerHandPile.remove(at: i!)                                              //take the card and put into played pile and array
+                    card.removeFromParent()
+                    playedPile.append(card)
+                    print (x)
+                    print ("regular turn played2")
+                    break
+                }
+                    
                     
                 else if card.value == 11{
+                    if playedPile.count == 0 {
+                        let i = playerHandPile.index(of: card)
+                        playerHandPile.remove(at: i!)                                              //take the card and put into played pile and array
+                        card.removeFromParent()
+                        playedPile.append(card)
+                        print (x)
+                        print ("regular turn played")
+                        break
+                    }
                     if playerHandPile[playerHandPile.count-2].value != 7 && playedPile.count >= 2 && card.value >= playedPile[playedPile.count-2].value{
                         //if following jack and there are already two cards in playedPile. also not a seven and the card is higher than the previous card
                         let i = playerHandPile.index(of: card)
