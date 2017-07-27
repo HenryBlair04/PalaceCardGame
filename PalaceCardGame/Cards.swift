@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import SceneKit
 
 class Card: SKSpriteNode {
     var value: Int
