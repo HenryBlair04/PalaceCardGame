@@ -17,33 +17,11 @@ struct GameState {
 
 
 class GameScene: SKScene {
-   /* class SKFieldNode {
-        SKFieldNode.CreateSpringField () {
-        fieldNode.Enabled = true
-        fieldNode.Position = new PointF (Size.Width / 2, 0)
-        fieldNode.Strength = 0.5f
-        fieldNode.Region = new SKRegion(Frame.Size)
-        addChild (fieldNode)
-        }
-        public override void TouchesBegan (NSSet touches, UIEvent evt) {
-        var touch = touches.AnyObject as UITouch;
-        var pt = touch.LocationInNode (this);
-        
-        var node = SKSpriteNode.FromImageNamed ("TinyBanana");
-        node.PhysicsBody = SKPhysicsBody.Create (node.Texture, node.Size);
-        node.PhysicsBody.AffectedByGravity = false;
-        node.PhysicsBody.AllowsRotation = true;
-        node.PhysicsBody.Mass = 0.03f;
-        
-        node.Position = pt;
-        AddChild (node);
-        }
-    }*/
-    
-    
+
     var masterZPosition: CGFloat = 5
     
     var state = GameState.PlayerTurn
+    var pile = [Card] ()
     var playerHandPile = [Card] ()
     var playerPile1 = [Card] () //these are the end piles
     var playerPile2 = [Card] ()
@@ -92,11 +70,11 @@ class GameScene: SKScene {
         computerPile5.append(CardCollection.instance.pickRandomCard())
         playerPile6.append(CardCollection.instance.pickRandomCard())
         computerPile6.append(CardCollection.instance.pickRandomCard())
-        playerHandPile.append(CardCollection.instance.pickRandomCard())
+        //playerHandPile.append(CardCollection.instance.pickRandomCard())
         computerHandPile.append(CardCollection.instance.pickRandomCard())
-        playerHandPile.append(CardCollection.instance.pickRandomCard())
+        //playerHandPile.append(CardCollection.instance.pickRandomCard())
         computerHandPile.append(CardCollection.instance.pickRandomCard())
-        playerHandPile.append(CardCollection.instance.pickRandomCard())
+        //playerHandPile.append(CardCollection.instance.pickRandomCard())
         computerHandPile.append(CardCollection.instance.pickRandomCard())
         
         
@@ -104,16 +82,16 @@ class GameScene: SKScene {
             drawPile.append(CardCollection.instance.pickRandomCard())
             //print (i)
         }
-      /*  playerHandPile.append(Card(11, "Diamond"))
-        playerHandPile.append(Card(11, "Diamond"))
+      //  playerHandPile.append(Card(11, "Diamond"))
+        //playerHandPile.append(Card(11, "Diamond"))
 
-        playerHandPile.append(Card(1, "RJoker"))
+        //playerHandPile.append(Card(1, "RJoker"))
         playerHandPile.append(Card(1, "BJoker"))
 
         playerHandPile.append(Card(7, "Diamond"))
         playerHandPile.append(Card(7, "Diamond"))
-        playerHandPile.append(Card(3, "Diamond"))
-        playerHandPile.append(Card(13, "Diamond"))*/
+        //playerHandPile.append(Card(3, "Diamond"))
+        //playerHandPile.append(Card(13, "Diamond"))*/
 
 
 
@@ -303,7 +281,7 @@ class GameScene: SKScene {
                 label7Error.alpha = 0
         //let x: Int = playedPile.count + playerHandPile.count + drawPile.count + computerHandPile.count
         if state == GameState.PlayerTurn {
-            for card in playerHandPile {
+            for card in (playerHandPile) {
                 if card.contains(touchLocation) {       // if the card is touched
                     if card.value == 10 {               // 10 is played
                         
@@ -516,6 +494,17 @@ class GameScene: SKScene {
                     }
                 }
             }
+            
+            
+            
+            
+            let touchLocation2 = touch.location (in: self)
+            for card in playerHandPile {
+                if card.contains(touchLocation) {       // if the card is touched
+                    
+                }
+            }
+
         }
         
                                                   //if the draw pile is empty, get rid of the fake card representing it
@@ -553,7 +542,6 @@ class GameScene: SKScene {
         updateCardUI()
         state = GameState.ComputerTurn
         run(SKAction.sequence([SKAction.wait(forDuration: 1.5), SKAction.run (computerTurn)]), completion:{
-            print ("computer turn over")
             self.state = GameState.PlayerTurn
             self.updateCardUI()
         })
@@ -579,12 +567,10 @@ class GameScene: SKScene {
         updateCardUI()
     }
     
-    /*func countPowerCards () {
-       CFArrayGetCountOfValue(playedPile as CFArray, 0...54, [10, 11, 2, 7, 1] )!
-        for card in playedPile {
-            if card.value == 2 || card.value 7 ||
-        }
-    } */
+   /* func countPowerCards () {
+        CFIndex.self; CFArrayGetCountOfValue (computerHandPile as CFArray,  0...20 as CFRange,  1 || 2 || 7 || 10 || 11);
+    }
+    */
     
     func moveFromHandToPile(card: Card, turn: String){
         if turn == "computer" && drawPile.count > 0{
@@ -607,32 +593,51 @@ class GameScene: SKScene {
     
     func findComputerCard() -> Card{
         var selectedCard = Card(100, "Cannot Play A Card")
-        if playedPile.count >= 0 && selectedCard.value == 10{              //computer plays a 10
-            let i = computerHandPile.index(of: selectedCard)
-            computerHandPile.remove(at: i!)
-            playedPile.append(selectedCard)
-            playedPile.removeAll()
-            drawCard(turn: "computer")
-        }
-        if playedPile.count > 0 && playedPile.last?.value == 7{           //following a 7
-            if selectedCard.value <= 7{
+        if playedPile.count >= 0 {              //computer plays a 10
+            if selectedCard.value == 10 {
                 let i = computerHandPile.index(of: selectedCard)
                 computerHandPile.remove(at: i!)
                 playedPile.append(selectedCard)
+                playedPile.removeAll()
                 drawCard(turn: "computer")
-            }
-            else{
-                print("give computer the pile")
-                // give the computer the pile
-                computerHandPile.append(contentsOf: playedPile)
-                playedPile = []
+                print ("computer burnt a 10")
+   
             }
         }
-       else if selectedCard.value == 1 {
-            print("give computer the pile")
+        if playedPile.count > 0 && playedPile.last?.value == 7 {           //following a 7
+            if selectedCard.value <= 7{
+                selectedCard.removeFromParent()
+                playedPile.append(selectedCard)
+                drawCard(turn: "computer")
+                print ("good card after 7")
+                drawCard(turn: "computer")
+                        }
+            if selectedCard.value > 7{}
+                                                                //bad following 7
+                print("give computer the pile")
+                // give the computer the pile
+                selectedCard.removeFromParent()
+                playedPile.append(selectedCard)
+                computerHandPile.append(contentsOf: playedPile)
+                playedPile.removeAll()
+                print ("computer played wrong card after 7")
+                drawCard(turn: "computer")
+            
+        }
+        
+        
+        
+        
+        
+        if selectedCard.value == 1 {
+            print("joker has been plaed by computer")
             // give the computer the pile
+            selectedCard.removeFromParent()
+            playedPile.append(selectedCard)
             playerHandPile.append(contentsOf: playedPile)
-            playedPile = []
+            playedPile.removeAll()
+            drawCard(turn: "computer")
+
         }
         else if playedPile.count > 1 && playedPile.last?.value == 11{   // jack is played
             var index = playedPile.count-2
